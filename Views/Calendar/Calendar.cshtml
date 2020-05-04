@@ -1,0 +1,121 @@
+
+
+
+
+   
+     
+@{
+string currentMonth2 = DateTime.Now.ToString("MMMM", new System.Globalization.CultureInfo("en-GB"));
+int currentMonth = DateTime.Now.Month;
+int currentYear = DateTime.Now.Year;
+DateTime firstDay = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+int daysInCurrentMonth = DateTime.DaysInMonth(firstDay.Year, firstDay.Month);
+DateTime lastDay = new DateTime(currentYear, currentMonth, daysInCurrentMonth);
+int dayOfWeekLast = ((int)lastDay.DayOfWeek > 0) ? (int)lastDay.DayOfWeek : 7;
+int dayOfWeekFirst = ((int)firstDay.DayOfWeek > 0) ? (int)firstDay.DayOfWeek : 7;
+
+}
+
+<head>
+    <style>
+      th {
+      padding: 10px;
+      border: 1px solid black; 
+      border-collapse: collapse;
+      }
+    </style>
+  </head>
+<h2>Event Calendar </h2>  
+<table width="70%">
+<tr>
+<td>
+
+<table id="Calendar" align="center" frame="border" width="100%">
+    <thead>
+        <tr>
+            <td>
+            <a href='@Url.Action("CalendarPrev", "Calendar", new {month =currentMonth })'><input type='button' style="width:100px; position:relative; text-align:left" value='prevMonth'</a> 
+            </td>
+            <td colspan="5">
+               <table align="center">
+               <tr>
+               <td>
+               @currentMonth2 
+               </td>
+               <td></td>
+               <td>
+               @currentYear
+               </td>
+               </tr>
+               </table>
+                
+            </td>
+            <td>  
+                <a href='@Url.Action("CalendarNext", "Calendar", new { month =currentMonth })'><input type='button' style="width:100px; position:relative; text-align:left" value='nextMonth'</a>           
+            </td>
+        </tr>
+    </thead>
+    <tr align="center">
+        <td>
+            Monday
+        </td>
+        <td>
+            Tuesday
+        </td>
+        <td>
+            Wednesday
+        </td>
+        <td>
+            Thursday
+        </td>
+        <td>
+            Friday
+        </td>
+        <td>
+            Saturday
+        </td>
+        <td>
+            Sunday
+        </td>
+    </tr>
+<tr align="center">
+
+    @for (int a = 1; a < dayOfWeekFirst; a++)
+    {
+        @:<td></td>
+    }
+
+    @for (int i = 1; i <= daysInCurrentMonth; i++)
+    {
+        DateTime renderedDay = new DateTime(firstDay.Year, firstDay.Month, i);
+      
+        
+        if (renderedDay.DayOfWeek == DayOfWeek.Sunday)
+        {
+                
+            @:<td class="calendar-holiday"><a href='@Url.Action("SingleDay", "SingleDay", new { day = i, month =currentMonth })'><input type='button' style="width:50px; text-align:left; color:red; padding=0px; vertical-align=top" value='@i'</a></td></tr><tr align="center">
+        }
+        
+        else if (renderedDay.DayOfWeek == DayOfWeek.Saturday)
+        {
+            @:<td class="calendar-holiday"><a href='@Url.Action("SingleDay", "SingleDay", new { day = i, month =currentMonth })'><input type='button' style="color:red; width:50px; text-align:left; padding=0px; vertical-align=top" value='@i'</a> </td>
+        }
+
+        else
+        {
+            @:<td><a href='@Url.Action("SingleDay", "SingleDay", new { day = i, month =currentMonth })'><input type='button' style="width:50px; text-align:left; padding=0px; vertical-align=top" value='@i'</a> </td>
+        }
+        
+  
+    }
+    @for (int a = 1; a <= 7-dayOfWeekLast; a++)
+    {
+        @:<td></td>
+    }
+    </tr>
+</table>
+</td>
+<td align="left" valign="top">
+</td>
+</tr>
+</table>

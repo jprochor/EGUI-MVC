@@ -1,0 +1,20 @@
+@model CalendarDate
+<head>
+    <title>Title of the document</title>
+    <style>
+      table, th, td {
+      padding: 10px;
+      border: 1px solid black; 
+      border-collapse: collapse;
+      }
+    </style>
+  </head>
+<h2>Single day @Model.Day @Model.Month</h2> 
+ <table style="width:100%">
+  <tr>
+    <th>Time</th>
+    <th>Description</th>
+  </tr>
+
+  <a href='@Url.Action("AddNew", "SingleDay", new { day = @Model.Day, month = @Model.Month })'><input type='button' runat='server' style="width:100px" value='AddNew'</a>
+<a href='@Url.Action("Close", "SingleDay", new { day = @Model.Day, month = @Model.Month})'><input type='button' runat='server' style="width:100px; text-align:left; float:right;" value='Close'</a>

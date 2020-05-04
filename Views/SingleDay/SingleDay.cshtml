@@ -1,0 +1,50 @@
+
+
+
+
+@model CalendarDate
+<head>
+    <title>Title of the document</title>
+    <style>
+      table, th, td {
+      padding: 10px;
+      border: 1px solid black; 
+      border-collapse: collapse;
+      }
+    </style>
+  </head>
+<h2>Single day @Model.Day @Model.Month</h2> 
+ <table style="width:100%">
+  <tr>
+    <th>Time</th>
+    <th>Description</th>
+  </tr>
+@for(int i=0;i<Model.k;i+=2)
+{
+  <tr>
+    <td>@Model.data[i]</td>
+    <td>@Model.data[i+1]</td>
+  </tr>
+}
+</table> 
+Row
+@using (Html.BeginForm("Delete", "SingleDay", FormMethod.Post)) 
+{
+  @Html.HiddenFor(m => m.Day)
+  @Html.HiddenFor(m => m.Month)
+    <input size="2" type="text" name="row" id="row" />  
+   <input type="submit" value="Delete"  />
+}
+@using (Html.BeginForm("Edit", "SingleDay", FormMethod.Post)) 
+{
+  @Html.HiddenFor(m => m.Day)
+  @Html.HiddenFor(m => m.Month)
+    <input size="2" type="text" name="row" id="row" /> 
+   <input type="submit" value="Edit"  />
+}
+<a href='@Url.Action("AddNew", "SingleDay", new { day = @Model.Day, month = @Model.Month })'><input type='button' runat='server' style="width:100px" value='AddNew'</a>
+<a href='@Url.Action("Close", "SingleDay", new { day = @Model.Day, month = @Model.Month})'><input type='button' runat='server' style="width:100px; text-align:left; float:right;" value='Close'</a>
+
+
+
+

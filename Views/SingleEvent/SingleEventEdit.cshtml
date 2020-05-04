@@ -1,0 +1,12 @@
+@model CalendarDate
+<h2>Single day @Model.Day @Model.Month</h2>
+@using (Html.BeginForm("SaveEdit", "SingleEvent", FormMethod.Post)) 
+{
+  @Html.HiddenFor(m => m.Day)
+  @Html.HiddenFor(m => m.Month)
+  @Html.HiddenFor(m => m.r)
+    <p>Time<input size="30" type="text" style="margin-left:45px" name="newtime" id="newtime" /> </p> <br/>
+     <p>Description<input size="30" type="text" name="newdescription" id="newdescription"  /> </p> <br/>
+   <input type="submit" value="SaveEdit"  />
+}
+<a href='@Url.Action("SingleDay", "SingleDay", new { day = @Model.Day, month = @Model.Month })'><input type='button' runat='server' style="width:100px; text-align:left; padding=0px; vertical-align=top;" value='Cancel'</a>
